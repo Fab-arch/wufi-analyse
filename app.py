@@ -1023,6 +1023,7 @@ def _laad_demo_data():
     # Alleen laden als er helemaal geen data is
     if any(st.session_state.get(f"df_a_{i}") is not None for i in range(MAX_VARIANTEN)):
         return
+    geladen = 0
     for i, (naam, bestand_a, bestand_b) in enumerate(_DEMO_VARIANTEN):
         pad_a = _DEMO_DIR / bestand_a
         pad_b = _DEMO_DIR / bestand_b
@@ -1031,13 +1032,16 @@ def _laad_demo_data():
             if df_a is not None:
                 st.session_state[f"df_a_{i}"] = df_a
                 st.session_state[f"naam_a_{i}"] = bestand_a
+                geladen += 1
         if pad_b.exists():
             df_b, _ = parse_wufi(pad_b.read_bytes())
             if df_b is not None:
                 st.session_state[f"df_b_{i}"] = df_b
                 st.session_state[f"naam_b_{i}"] = bestand_b
         st.session_state[f"naam_{i}"] = naam
-    st.session_state["_demo_geladen"] = True
+    if geladen > 0:
+        st.session_state["_demo_geladen"] = True
+        st.rerun()
 
 _laad_demo_data()
 
