@@ -946,19 +946,14 @@ def bereken_energie(df_b: pd.DataFrame) -> dict:
     return result
 
 
-def figuur_download(fig, bestandsnaam: str, label: str = "Download als PNG"):
-    sleutel = bestandsnaam.replace(".", "_")
-    with st.expander("Exportinstellingen", expanded=False):
-        col1, col2 = st.columns(2)
-        breedte = col1.number_input("Breedte (px)", min_value=400, max_value=2400,
-                                     value=900, step=50, key=f"w_{sleutel}")
-        hoogte  = col2.number_input("Hoogte (px)",  min_value=200, max_value=1600,
-                                     value=500, step=50, key=f"h_{sleutel}")
+def figuur_download(fig, bestandsnaam: str, label: str = "Download volledige grafiek als PNG"):
     try:
-        img = pio.to_image(fig, format="png", width=int(breedte), height=int(hoogte), scale=2)
+        img = pio.to_image(fig, format="png",
+                           width=int(_export_breedte),
+                           height=int(_export_hoogte), scale=2)
         st.download_button(label=label, data=img, file_name=bestandsnaam, mime="image/png")
     except Exception:
-        st.caption("PNG-export vereist kaleido. Gebruik het camera-icoon rechtsboven in de grafiek.")
+        pass
 
 
 # ── Sessiepersistentie: bestanden onthouden tussen herstarten ─────────────────
@@ -1053,6 +1048,24 @@ def _laad_demo_data():
 _laad_demo_data()
 
 # ── Sidebar: gevelvarianten (altijd renderen, ook op infopagina) ──────────────
+st.sidebar.markdown('<div class="sidebar-label">Export</div>', unsafe_allow_html=True)
+st.sidebar.markdown('<p style="font-size:0.75rem;margin:0 0 0.3rem 0;opacity:0.6">Afmetingen camerafoto (px)</p>', unsafe_allow_html=True)
+_exp_col1, _exp_col2 = st.sidebar.columns(2)
+_export_breedte = _exp_col1.number_input("Breed", min_value=400, max_value=2400, value=900, step=50, key="export_w", label_visibility="visible")
+_export_hoogte  = _exp_col2.number_input("Hoog",  min_value=200, max_value=1600, value=500, step=50, key="export_h", label_visibility="visible")
+_plotly_config = {
+    "toImageButtonOptions": {
+        "format": "png",
+        "filename": "wufi_grafiek",
+        "width":  int(_export_breedte),
+        "height": int(_export_hoogte),
+        "scale": 2,
+    },
+    "modeBarButtonsToRemove": [],
+    "displayModeBar": True,
+    "displaylogo": False,
+}
+
 st.sidebar.markdown('<div class="sidebar-label">Varianten</div>', unsafe_allow_html=True)
 st.sidebar.markdown('<p style="font-size:0.75rem;margin:0 0 0.5rem 0;opacity:0.6">Upload per variant Simulatie A en/of Simulatie B</p>', unsafe_allow_html=True)
 
@@ -1422,7 +1435,7 @@ if _graf_comfort_data:
             height=480, hovermode="closest",
             legend=dict(orientation="h", y=-0.15),
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, config=_plotly_config)
         figuur_download(fig, "adaptief_comfortdiagram.png")
     tab_idx += 1
 
@@ -1468,7 +1481,7 @@ if _graf_comfort_data:
             legend=dict(orientation="h", y=-0.15),
             yaxis=dict(tickformat=".1f" if _weergave == "% van bezettingsuren" else ".0f"),
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, config=_plotly_config)
         figuur_download(fig, "overschrijding_per_maand.png")
     tab_idx += 1
 
@@ -1514,7 +1527,7 @@ if _graf_comfort_data:
             margin=dict(l=60, r=220, t=40, b=50),
             yaxis=dict(tickformat=".1f"),
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, config=_plotly_config)
         figuur_download(fig, "zomerperiode.png")
     tab_idx += 1
 
@@ -1542,7 +1555,7 @@ if _graf_comfort_data:
             margin=dict(l=60, r=160, t=40, b=50),
             yaxis=dict(tickformat=".1f"),
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, config=_plotly_config)
         figuur_download(fig, "operatieve_temperatuur_jaar.png")
     tab_idx += 1
 
@@ -1571,7 +1584,7 @@ if _graf_comfort_data:
             margin=dict(l=60, r=160, t=40, b=50),
             yaxis=dict(tickformat=".1f", autorange=True),
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, config=_plotly_config)
         figuur_download(fig, "relatieve_luchtvochtigheid.png")
     tab_idx += 1
 
@@ -1606,7 +1619,7 @@ if _graf_comfort_data:
                 margin=dict(l=60, r=160, t=40, b=50),
                 yaxis=dict(tickformat=".2f", range=[-3, 3]),
             )
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True, config=_plotly_config)
             figuur_download(fig, "pmv_jaarverloop.png")
         tab_idx += 1
 
@@ -1636,7 +1649,7 @@ if alle_run_b:
             legend=dict(orientation="h", y=-0.15),
             yaxis=dict(tickformat=".0f"),
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, config=_plotly_config)
         figuur_download(fig, "warmtevraag_per_maand.png")
     tab_idx += 1
 
@@ -1668,7 +1681,7 @@ if alle_run_b:
                 legend=dict(orientation="h", y=-0.15),
                 yaxis=dict(tickformat=".0f"),
             )
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True, config=_plotly_config)
             figuur_download(fig, "koelvraag_per_maand.png")
     tab_idx += 1
 
@@ -1700,5 +1713,5 @@ if alle_run_b:
                 legend=dict(orientation="h", y=-0.15),
                 yaxis=dict(tickformat=".0f"),
             )
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True, config=_plotly_config)
             figuur_download(fig, "warmteflux_gevel.png")
