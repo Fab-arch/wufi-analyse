@@ -11,7 +11,7 @@ from pathlib import Path
 st.set_page_config(page_title="WUFI Plus Analyse", layout="wide", initial_sidebar_state="expanded")
 
 # ── Design systeem ─────────────────────────────────────────────────────────────
-KLEUREN_VARIANTEN = ["#4361ee", "#f4a261", "#7b2d8b", "#00b4d8", "#e09b3d"]  # blauw, zandoranje, paars, cyaan, okergeel
+KLEUREN_VARIANTEN = ["#2166ac", "#d6604d", "#1a9850", "#8e44ad", "#e67e22"]  # sterk blauw, rood, groen, paars, oranje
 KLEUR_ACCENT      = "#40916c"
 KLEUR_RASTER      = "#dde8d8"
 KLEUR_PAPIER      = "#f4f7f2"
