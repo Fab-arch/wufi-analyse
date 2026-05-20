@@ -515,7 +515,8 @@ if _pagina == "Informatie":
     <p>Deze tool analyseert uurlijkse exportbestanden van <strong>WUFI Plus</strong> en berekent automatisch
     comfort- en energie-indicatoren voor maximaal <strong>vijf gevelvarianten</strong>. Varianten worden naast
     elkaar getoond voor directe vergelijking.</p>
-    <p>Ontwikkeld bij Merosch. Bruikbaar voor elk WUFI Plus-project waarbij gevelvarianten worden vergeleken op
+    <p>Ontwikkeld in het kader van een afstudeerproject Built Environment aan de Hogeschool Utrecht, uitgevoerd bij Merosch.
+    Bruikbaar voor elk WUFI Plus-project waarbij gevelvarianten worden vergeleken op
     thermisch comfort (ISSO-74 / ISO 17772-1) en energievraag.</p>
     </div>""", unsafe_allow_html=True)
 
