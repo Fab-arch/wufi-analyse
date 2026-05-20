@@ -1492,8 +1492,8 @@ if _graf_comfort_data:
             zomer = df[df["datetime"].dt.month.isin([5, 6, 7, 8, 9])]
             fig.add_trace(go.Scatter(
                 x=zomer["datetime"], y=zomer["T_operative"], name=naam,
-                line=dict(color=KLEUREN_VARIANTEN[i % len(KLEUREN_VARIANTEN)], width=2.0),
-                opacity=0.9,
+                line=dict(color=KLEUREN_VARIANTEN[i % len(KLEUREN_VARIANTEN)], width=1.0),
+                opacity=0.8,
                 hovertemplate="%{y:.1f} °C<extra>" + naam + "</extra>",
             ))
         fig.update_layout(
