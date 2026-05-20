@@ -420,7 +420,7 @@ projectnaam = st.sidebar.text_input("Projectnaam", value="", placeholder="bijv. 
 # Bezettingsprofielen (bronnen: DIN 18599-100 Tabel 4, NTA 8800 Bijlage B, ISO 17772-1 Bijlage B)
 _BEZET_PROFIELEN = {
     "Kantoor — DIN 18599-100": {"dagen": ["Ma","Di","Wo","Do","Vr"], "van": 8,  "tot": 18},
-    "Kantoor — NTA 8800":      {"dagen": ["Ma","Di","Wo","Do","Vr"], "van": 7,  "tot": 19},
+    "Kantoor — NTA 8800":      {"dagen": ["Ma","Di","Wo","Do","Vr"], "van": 8,  "tot": 18},
     "Onderwijs — NTA 8800":    {"dagen": ["Ma","Di","Wo","Do","Vr"], "van": 8,  "tot": 17},
     "Woning — NTA 8800":       {"dagen": ["Ma","Di","Wo","Do","Vr","Za","Zo"], "van": 0, "tot": 24},
     "Aangepast":                None,
@@ -571,7 +571,7 @@ if _pagina == "Informatie":
       <th style="text-align:left;padding:0.4rem 0.8rem;color:#636366;">Uren</th>
       <th style="text-align:left;padding:0.4rem 0.8rem;color:#636366;">Bron</th>
     </tr>
-    <tr style="border-bottom:1px solid #f2f2f7;"><td style="padding:0.4rem 0.8rem;">Kantoor</td><td style="padding:0.4rem 0.8rem;">Ma–Vr</td><td style="padding:0.4rem 0.8rem;">07:00–19:00</td><td style="padding:0.4rem 0.8rem;">NTA 8800 Bijlage B</td></tr>
+    <tr style="border-bottom:1px solid #f2f2f7;"><td style="padding:0.4rem 0.8rem;">Kantoor</td><td style="padding:0.4rem 0.8rem;">Ma–Vr</td><td style="padding:0.4rem 0.8rem;">08:00–18:00</td><td style="padding:0.4rem 0.8rem;">NTA 8800 Bijlage B</td></tr>
     <tr style="border-bottom:1px solid #f2f2f7;"><td style="padding:0.4rem 0.8rem;">Onderwijs</td><td style="padding:0.4rem 0.8rem;">Ma–Vr</td><td style="padding:0.4rem 0.8rem;">08:00–17:00</td><td style="padding:0.4rem 0.8rem;">NTA 8800 Bijlage B</td></tr>
     <tr style="border-bottom:1px solid #f2f2f7;"><td style="padding:0.4rem 0.8rem;">Woning</td><td style="padding:0.4rem 0.8rem;">Ma–Zo</td><td style="padding:0.4rem 0.8rem;">00:00–24:00</td><td style="padding:0.4rem 0.8rem;">NTA 8800 Bijlage B</td></tr>
     <tr><td style="padding:0.4rem 0.8rem;">Aangepast</td><td style="padding:0.4rem 0.8rem;" colspan="3">Vrij in te stellen via de zijbalk</td></tr>
