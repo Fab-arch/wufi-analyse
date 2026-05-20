@@ -391,7 +391,6 @@ wufi_template = go.layout.Template(
         ),
         colorway=KLEUREN_VARIANTEN,
         margin=dict(l=60, r=30, t=40, b=50),
-        width=700,
     )
 )
 pio.templates["wufi"] = wufi_template
@@ -948,8 +947,15 @@ def bereken_energie(df_b: pd.DataFrame) -> dict:
 
 
 def figuur_download(fig, bestandsnaam: str, label: str = "Download als PNG"):
+    sleutel = bestandsnaam.replace(".", "_")
+    with st.expander("Exportinstellingen", expanded=False):
+        col1, col2 = st.columns(2)
+        breedte = col1.number_input("Breedte (px)", min_value=400, max_value=2400,
+                                     value=900, step=50, key=f"w_{sleutel}")
+        hoogte  = col2.number_input("Hoogte (px)",  min_value=200, max_value=1600,
+                                     value=500, step=50, key=f"h_{sleutel}")
     try:
-        img = pio.to_image(fig, format="png", width=1400, height=540, scale=2)
+        img = pio.to_image(fig, format="png", width=int(breedte), height=int(hoogte), scale=2)
         st.download_button(label=label, data=img, file_name=bestandsnaam, mime="image/png")
     except Exception:
         st.caption("PNG-export vereist kaleido. Gebruik het camera-icoon rechtsboven in de grafiek.")
@@ -1416,7 +1422,7 @@ if _graf_comfort_data:
             height=480, hovermode="closest",
             legend=dict(orientation="h", y=-0.15),
         )
-        st.plotly_chart(fig, use_container_width=False)
+        st.plotly_chart(fig, use_container_width=True)
         figuur_download(fig, "adaptief_comfortdiagram.png")
     tab_idx += 1
 
@@ -1462,7 +1468,7 @@ if _graf_comfort_data:
             legend=dict(orientation="h", y=-0.15),
             yaxis=dict(tickformat=".1f" if _weergave == "% van bezettingsuren" else ".0f"),
         )
-        st.plotly_chart(fig, use_container_width=False)
+        st.plotly_chart(fig, use_container_width=True)
         figuur_download(fig, "overschrijding_per_maand.png")
     tab_idx += 1
 
@@ -1508,7 +1514,7 @@ if _graf_comfort_data:
             margin=dict(l=60, r=220, t=40, b=50),
             yaxis=dict(tickformat=".1f"),
         )
-        st.plotly_chart(fig, use_container_width=False)
+        st.plotly_chart(fig, use_container_width=True)
         figuur_download(fig, "zomerperiode.png")
     tab_idx += 1
 
@@ -1536,7 +1542,7 @@ if _graf_comfort_data:
             margin=dict(l=60, r=160, t=40, b=50),
             yaxis=dict(tickformat=".1f"),
         )
-        st.plotly_chart(fig, use_container_width=False)
+        st.plotly_chart(fig, use_container_width=True)
         figuur_download(fig, "operatieve_temperatuur_jaar.png")
     tab_idx += 1
 
@@ -1565,7 +1571,7 @@ if _graf_comfort_data:
             margin=dict(l=60, r=160, t=40, b=50),
             yaxis=dict(tickformat=".1f", autorange=True),
         )
-        st.plotly_chart(fig, use_container_width=False)
+        st.plotly_chart(fig, use_container_width=True)
         figuur_download(fig, "relatieve_luchtvochtigheid.png")
     tab_idx += 1
 
@@ -1600,7 +1606,7 @@ if _graf_comfort_data:
                 margin=dict(l=60, r=160, t=40, b=50),
                 yaxis=dict(tickformat=".2f", range=[-3, 3]),
             )
-            st.plotly_chart(fig, use_container_width=False)
+            st.plotly_chart(fig, use_container_width=True)
             figuur_download(fig, "pmv_jaarverloop.png")
         tab_idx += 1
 
@@ -1630,7 +1636,7 @@ if alle_run_b:
             legend=dict(orientation="h", y=-0.15),
             yaxis=dict(tickformat=".0f"),
         )
-        st.plotly_chart(fig, use_container_width=False)
+        st.plotly_chart(fig, use_container_width=True)
         figuur_download(fig, "warmtevraag_per_maand.png")
     tab_idx += 1
 
@@ -1662,7 +1668,7 @@ if alle_run_b:
                 legend=dict(orientation="h", y=-0.15),
                 yaxis=dict(tickformat=".0f"),
             )
-            st.plotly_chart(fig, use_container_width=False)
+            st.plotly_chart(fig, use_container_width=True)
             figuur_download(fig, "koelvraag_per_maand.png")
     tab_idx += 1
 
@@ -1694,5 +1700,5 @@ if alle_run_b:
                 legend=dict(orientation="h", y=-0.15),
                 yaxis=dict(tickformat=".0f"),
             )
-            st.plotly_chart(fig, use_container_width=False)
+            st.plotly_chart(fig, use_container_width=True)
             figuur_download(fig, "warmteflux_gevel.png")
