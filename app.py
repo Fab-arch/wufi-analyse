@@ -1546,10 +1546,12 @@ if _graf_comfort_data:
         fig.add_hrect(y0=40, y1=60, fillcolor="rgba(64,145,108,0.08)", layer="below", line_width=0,
                       annotation_text="40–60% zone", annotation_position="right",
                       annotation_font=dict(color=KLEUR_ACCENT, size=11))
+        _dash_stijlen = ["solid", "dash", "dot", "dashdot", "longdash"]
         for i, (naam, df) in enumerate(_graf_comfort_data.items()):
             fig.add_trace(go.Scatter(
                 x=df["datetime"], y=df["RH_inner"], name=naam,
-                line=dict(color=KLEUREN_VARIANTEN[i % len(KLEUREN_VARIANTEN)], width=2.0),
+                line=dict(color=KLEUREN_VARIANTEN[i % len(KLEUREN_VARIANTEN)],
+                          width=2.0, dash=_dash_stijlen[i % len(_dash_stijlen)]),
                 opacity=0.9,
                 hovertemplate="%{y:.1f} %<extra>" + naam + "</extra>",
             ))
@@ -1560,7 +1562,7 @@ if _graf_comfort_data:
             legend=dict(orientation="v", yanchor="middle", y=0.5, xanchor="left", x=1.02,
                         bgcolor="rgba(250,247,242,0.95)", bordercolor="#d4c9b8", borderwidth=1, font=dict(size=11)),
             margin=dict(l=60, r=160, t=40, b=50),
-            yaxis=dict(tickformat=".1f", range=[0, 100]),
+            yaxis=dict(tickformat=".1f", autorange=True),
         )
         st.plotly_chart(fig, use_container_width=True)
         figuur_download(fig, "relatieve_luchtvochtigheid.png")
